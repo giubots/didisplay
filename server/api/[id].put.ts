@@ -1,14 +1,26 @@
-import sanitizeHtml from 'sanitize-html';
-import { data } from "../utils/storage";
+import { addMessage, addMessageSimple } from "../utils/storage"
 
 
 export default defineEventHandler(async (event) => {
-  const id = event.context.params?.id ?? "undefined"
+  const id = (event.context.params?.id ?? "undefined").replace(/[^a-zA-Z0-9]/g, "")
   const body = await readBody(event)
-  const sanitized = sanitizeHtml(body)
-  data[id] = sanitized
-  return {
-    id,
-    message: sanitized
+
+  if (typeof body === "string") {
+    const text = sanitizeStatusMessage(body)
+    addMessageSimple(id, text)
+    return { id, text }
   }
+
+  if (!body.text) {
+    throw createError({ statusCode: 400, message: "Missing text attribute" })
+  }
+  const text = sanitizeStatusMessage(body.text)
+  const name = sanitizeStatusMessage(body.name)
+
+  if (!body.type || !["left", "right"].includes(body.type)) {
+    throw createError({ statusCode: 400, message: "Attribute type must be left or right" })
+  }
+
+  addMessage(id, text, name, body.type)
+  return { id, text, name, type: body.type }
 })
