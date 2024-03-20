@@ -9,14 +9,17 @@
           <div class="my-2 pa-2">
             Topic of the conversation:
           </div>
-          <div class="my-2 py-2 px-3 shadowed rounded-lg">
+          <div class="mx-5 my-2 py-2 px-3 shadowed rounded-lg">
             {{ data.metadata }}
           </div>
         </div>
       </v-app-bar-title>
       <template #append>
-        <v-btn @click="toggleTheme">
-          toggle theme
+        <v-btn
+          icon
+          @click="toggleTheme"
+        >
+          <v-icon>mdi-theme-light-dark</v-icon>
         </v-btn>
       </template>
     </v-app-bar>
@@ -27,9 +30,7 @@
           :key="i"
           :class="['d-flex', { 'text-right flex-row-reverse': message.type == 'right' }]"
         >
-          <v-card
-            class="ma-3 pa-3 shadowed rounded-lg"
-          >
+          <v-card class="ma-3 pa-3 shadowed rounded-lg">
             <div class="text-body-1">
               {{ message.name }}
             </div>
@@ -39,6 +40,7 @@
           </v-card>
         </div>
       </v-list>
+      <div id="endPage" />
     </v-main>
   </div>
   <!-- <div>
@@ -54,10 +56,18 @@ import { useTheme } from 'vuetify'
 const route = useRoute();
 const theme = useTheme()
 const { pending, data } = await useLazyAsyncData('data', () => $fetch(`/api/${route.params.id}`));
-onMounted(() => setInterval(refreshNuxtData, 1000, 'data'))
-function toggleTheme () {
+function toggleTheme() {
   theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
 }
+function refreshData() {
+  refreshNuxtData('data').then(
+    () => {
+      const element = document.getElementById('endPage')
+      element.scrollIntoView({ behavior: "smooth", block: "start" })
+    }
+  )
+}
+onMounted(() => setInterval(refreshData, 1000))
 
 // const data = useState(() => {
 //   return {
