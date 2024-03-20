@@ -1,20 +1,27 @@
-type Message = { type: "left" | "right" | null, name: string | null, text: string }
-type Conversation = { messages: Message[] }
+type Message = { type?: "left" | "right", name?: string, text: string }
+type Conversation = { messages: Message[], metadata?: string }
 
 const data: { [id: string]: Conversation } = {}
 
-export const addMessage = (id: string, text: string, name: string | null = null, type: "left" | "right"): void => {
+export const addMessage = (id: string, message: Message): void => {
     if (!data[id]) {
         data[id] = { messages: [] }
     }
-    data[id].messages.push({ type, name, text })
+    data[id].messages.push(message)
 }
 
-export const addMessageSimple = (id: string, text: string): void => {
-    data[id] = { messages: [{ type: null, name: null, text }] }
+export const setMetadata = (id: string, metadata: string): void => {
+    if (!data[id]) {
+        data[id] = { messages: [] }
+    }
+    data[id].metadata = metadata
 }
 
-export const getMessages = (id: string): Conversation => data[id] ?? { messages: [] }
+export const setConversation = (id: string, messages: Message[], metadata?: string): void => {
+    data[id] = { messages, metadata }
+}
+
+export const getConversation = (id: string): Conversation => data[id] ?? { messages: [] }
 
 export const getDataLength = (): number => Object.keys(data).length
 
