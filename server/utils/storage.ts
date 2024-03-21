@@ -25,3 +25,6 @@ export const getConversation = (id: string): Conversation => data[id] ?? { messa
 
 export const getDataLength = (): number => Object.keys(data).length
 
+export const clearConversation = (id: string): void => {
+    delete data[id]
+}
