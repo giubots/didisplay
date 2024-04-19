@@ -1,13 +1,13 @@
-import { getDataLength } from "../utils/storage"
+import { getDataLength } from "../utils/storage";
 
 export default defineEventHandler(async (event) => {
   return {
     build: {
-      name: "echoweb",
-      version: "1.0.0",
+      name: "DiDisplay",
+      version: "1.0.1",
     },
     instance: {
-      size: getDataLength()
-    }
-  }
-})
+      size: getDataLength(),
+    },
+  };
+});

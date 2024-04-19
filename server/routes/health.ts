@@ -1,3 +1,3 @@
 export default defineEventHandler(async (event) => {
-  return { status: "UP" }
-})
+  return { status: "UP" };
+});

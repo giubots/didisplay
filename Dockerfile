@@ -1,6 +1,16 @@
-FROM node:16-alpine
-WORKDIR /home/node/app
-COPY . /home/node/app
-RUN npm install
+ARG NODE_VERSION=20.5-alpine
+
+FROM --platform=amd64 node:${NODE_VERSION} as builder
+WORKDIR /usr/src/app
+COPY package*.json .
+RUN npm ci
+COPY . .
 RUN npm run build
-CMD ["node", ".output/server/index.mjs"]
+
+FROM --platform=amd64 node:${NODE_VERSION} as production
+WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app/package*.json .
+RUN npm ci --production
+COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/public ./public
+CMD ["npm", "run", "start"]
