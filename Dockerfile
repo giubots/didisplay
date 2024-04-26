@@ -11,5 +11,5 @@ FROM --platform=amd64 node:${NODE_VERSION} as production
 WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/package*.json .
 RUN npm ci --production
-COPY --from=builder /usr/src/app/.output ./output
+COPY --from=builder /usr/src/app/.output ./.output
 CMD ["node", "./.output/server/index.mjs"]

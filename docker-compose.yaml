@@ -1,0 +1,9 @@
+services:
+  didisplay:
+    image: ghcr.io/giubots/didisplay:master
+    environment:
+      - NUXT_PUBLIC_LOGOS=[{"dark":"https://www.ugent.be/++theme++ugent/static/images/logo_ugent_en.svg","light":"https://www.ugent.be/++theme++ugent/static/images/logo_ugent_en.svg"}]
+      - NUXT_PUBLIC_PRE_METADATA="Pre metadata"
+      - NUXT_PUBLIC_POST_METADATA="Post metadata"
+    ports:
+      - "3000:3000"

@@ -1,11 +1,10 @@
 <template>
   <div class="d-flex align-center">
-    <v-img
+    <img
       v-for="(item, index) in config.public.logos"
       :key="index"
-      width="100"
       :src="theme.global.current.value.dark ? item.dark : item.light"
-    />
+    >
   </div>
 </template>
 
