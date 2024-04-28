@@ -8,7 +8,7 @@ The application can be used to display the full conversation or only the latest 
 To use it, simply send a POST request to the API with the message you want to display.
 The application can be run locally or deployed to a server, and it can be customized with logos.
 
-<!-- TODO: Blog link. -->
+Related: [blog post](https://dev.to/giubots/three-tips-for-your-next-software-demo-3p3d) and [demo at FTI fair](https://www.youtube.com/watch?v=OzSG4oxSnKM).
 
 ![Screenshot of the application](./screenshots/chat.gif)
 
